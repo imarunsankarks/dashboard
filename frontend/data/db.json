@@ -1,0 +1,32 @@
+{
+  "blogs": [
+    {
+      "id": "1",
+      "name": "Introduction to JavaScript",
+      "content": "Learn the basics of JavaScript programming language in just 20 words!",
+      "author": "John Doe",
+      "year": 2022
+    },
+    {
+      "id": "2",
+      "name": "Building Responsive Web Design",
+      "content": "Explore the principles and techniques of creating responsive web designs for various devices.",
+      "author": "Jane Smith",
+      "year": 2021
+    },
+    {
+      "id": "3",
+      "name": "Mastering React Components",
+      "content": "Dive deep into React.js components and enhance your skills in building dynamic and interactive user interfaces.",
+      "author": "Alex Johnson",
+      "year": 2023
+    },
+    {
+      "id": "95b3",
+      "name": "test",
+      "content": "test content",
+      "author": "test",
+      "year": "2025"
+    }
+  ]
+}

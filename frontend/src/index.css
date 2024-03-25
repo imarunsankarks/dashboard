@@ -1,0 +1,109 @@
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap");
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --theme-red: #bb1e2b;
+  --theme-sblue: #18bcf3;
+  --border-rad: 15px;
+}
+
+body {
+  font-family: "Open Sans", sans-serif;
+  background: #000000;
+  color: #ffffff;
+}
+
+a {
+  display: inline;
+  text-decoration: none;
+  color: #ffffff;
+}
+
+p,
+span,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: "Open Sans", sans-serif;
+}
+
+/* ----------------------------------nav-bar--------------------------- */
+.navbar {
+  border-bottom: 2px solid var(--theme-red);
+}
+.navs {
+  display: flex;
+  gap: 30px;
+  justify-content: flex-end;
+}
+
+.navs a {
+  font-size: 16px;
+  font-weight: 400;
+  color: #ffffff;
+}
+
+.blog-card {
+  display: flex;
+  gap: 20px;
+  /* flex-direction: column; */
+}
+
+.blog-card img {
+  width: 50%;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 15px;
+}
+.blog-card .content {
+  width: 50%;
+}
+.blog-card {
+  background: linear-gradient(130deg, #ffffff39, #f7f7f70a);
+  padding: 10px;
+  border-radius: 20px;
+  transition: all 0.4s ease;
+}
+
+.blog-card:hover {
+  transform: scale(1.05);
+  color: #ffffff;
+}
+.blog-card .content .id,
+.blog-card .content .price {
+  font-size: 14px;
+  font-weight: 200;
+  text-transform: uppercase;
+  color: #949494;
+}
+
+.product-details .all-imgs {
+  display: flex;
+  gap: 10px;
+}
+
+.product-details .all-imgs .img1 {
+  width: 60%;
+  height: 500px;
+  object-fit: cover;
+}
+
+.product-details .all-imgs .inner-imgs {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 40%;
+}
+
+.product-details .all-imgs .inner-imgs img {
+  width: 100%;
+  height: 245px;
+  object-fit: cover;
+}
