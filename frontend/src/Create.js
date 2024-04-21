@@ -1,90 +1,124 @@
+
 import { useState } from "react";
-import { useHistory } from 'react-router-dom';
+// import { useHistory } from 'react-router-dom';
 
 const Create = () => {
-    const [id, setId] = useState('')
-    const [name, setName] = useState('');
-    const [category, setCategory] = useState('');
-    const [color, setColor] = useState('');
-    const [price, setPrice] = useState('');
-    const [image1, setImage1] = useState('')
-    const [image2, setImage2] = useState('')
-    const [image3, setImage3] = useState('')
-    const [material, setMaterial] = useState('')
-    const [size, setSize] = useState([])
-    const [quantity, setQuantity] = useState([])
-    const [offer, setOffer] = useState('')
-    const [status, setStatus] = useState(true)
+    const [formData, setFormData] = useState({
+        id: '',
+        name: '',
+        category: '',
+        color: '',
+        price: '',
+        image1: '',
+        image2: '',
+        image3: '',
+        material: '',
+        size: [],
+        quantity: [],
+        offer: '',
+        status: true,
+    });
+
+    // const [isPending, setIspending] = useState(false)
 
 
+    const handleChange = (e) => {
+        const { name, value, type, checked } = e.target;
+        console.log(value);
 
-    const [isPending, setIspending] = useState(false)
-    const navigate = useHistory()
+        if (name === 'size' || name === 'quantity') {
+            const arrayValue = value.split(',').map((item) => item.trim());
+            setFormData((prevData) => ({
+                ...prevData,
+                [name]: arrayValue,
+            }));
+        } else {
+            setFormData((prevData) => ({
+                ...prevData,
+                [name]: type === 'checkbox' ? checked : value,
+            }));
+        }
+    };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        const newDress = { id, name, category, color, price, image1, image2, image3, material, size, quantity, offer, status };
 
-        setIspending(true)
-
-        fetch('/api/routes/', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(newDress)
-        })
-            .then((data) => {
-                console.log('Response from server:', data);
-                setIspending(false)
-                navigate.push('/')
-            })
-            .catch(error => {
-                console.error('Error:', error);
+        try {
+            const response = await fetch('/api/routes/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(formData),
             });
-    }
 
+            if (!response.ok) {
+                throw new Error('Error adding data to the server');
+            }
+
+            const result = await response.json();
+            console.log('Data added successfully:', result);
+            window.location.reload()
+        } catch (error) {
+            console.error('Error:', error.message);
+        }
+    };
 
     return (
-        <div className="container">
-            <h2>Create a new product</h2>
-            <form onSubmit={handleSubmit}>
-                <label htmlFor='id'>id: </label>
-                <input type='text' id='id' value={id} onChange={(e) => setId(e.target.value)} required />
-                <label htmlFor='name'>Name: </label>
-                <input type='text' id='name' value={name} onChange={(e) => setName(e.target.value)} required />
-                <label htmlFor='category'>category: </label>
-                <input type='text' id='category' value={category} onChange={(e) => setCategory(e.target.value)} required />
-                <label htmlFor='color'>color: </label>
-                <input type='text' id='color' value={color} onChange={(e) => setColor(e.target.value)} required />
-                <label htmlFor='price'>price: </label>
-                <input type='number' id='price' value={price} onChange={(e) => setPrice(e.target.value)} required />
-                <label htmlFor='image1'>image1: </label>
-                <input type='text' id='image1' value={image1} onChange={(e) => setImage1(e.target.value)} required />
-                <label htmlFor='image2'>image2: </label>
-                <input type='text' id='image2' value={image2} onChange={(e) => setImage2(e.target.value)} required />
-                <label htmlFor='image3'>image3: </label>
-                <input type='text' id='image3' value={image3} onChange={(e) => setImage3(e.target.value)} required />
-                <label htmlFor='material'>material: </label>
-                <input type='text' id='material' value={material} onChange={(e) => setMaterial(e.target.value)} required />
-                <label htmlFor='size'>size: </label>
-                <input type='text' id='size' value={size} onChange={(e) => setSize(e.target.value)} required />
-                <label htmlFor='quantity'>quantity: </label>
-                <input type='text' id='quantity' value={quantity} onChange={(e) => setQuantity(e.target.value)} required />
-                <label htmlFor='offer'>offer: </label>
-                <input type='text' id='offer' value={offer} onChange={(e) => setOffer(e.target.value)} required />
-                <label htmlFor='status'>status: </label>
-                <input type='checkbox' id='status' value={status} onChange={(e) => setStatus(e.target.value)} required />
-                {!isPending && <button>Submit</button>}
-                {isPending && <button>Adding....</button>}
+        <div>
+            <form onSubmit={handleSubmit} id='update-form'>
+                <div className='container'>
+                    <div className='row each-input-field g-4'>
+                        <div className='col-4'>
+                            <input type="text" name="id" onChange={handleChange} onClick={handleChange} placeholder='ID' id='form-id' />
+                        </div>
+                        <div className='col-4'>
+                            <input type="text" name="name" onChange={handleChange} onClick={handleChange} placeholder='Name' id='form-name' />
+                        </div>
+                        <div className='col-4'>
+                            <input type="text" name="category" onChange={handleChange} onClick={handleChange} placeholder='Category' id='form-category' />
+                        </div>
+                        <div className='col-4'>
+                            <input type="text" name="color" onChange={handleChange} onClick={handleChange} placeholder='Color' id='form-color' />
+                        </div>
+                        <div className='col-4'>
+                            <input type="number" name="price" onChange={handleChange} onClick={handleChange} placeholder='Price' id='form-price' />
+                        </div>
+                        <div className='col-4'>
+                            <input type="text" name="image1" onChange={handleChange} onClick={handleChange} placeholder='Image1 location' id='form-image1' />
+                        </div>
+                        <div className='col-4'>
+                            <input type="text" name="image2" onChange={handleChange} onClick={handleChange} placeholder='Image2 location' id='form-image2' />
+                        </div>
+                        <div className='col-4'>
+                            <input type="text" name="image3" onChange={handleChange} onClick={handleChange} placeholder='Image3 location' id='form-image3' />
+                        </div>
+                        <div className='col-4'>
+                            <input type="text" name="material" onChange={handleChange} onClick={handleChange} placeholder='Material' id='form-material' />
+                        </div>
+                        <div className='col-4'>
+                            <input type="text" name="size" onChange={handleChange} onClick={handleChange} placeholder='Size (comma seperated)' id='form-size' />
+                        </div>
+                        <div className='col-4'>
+                            <input type="text" name="quantity" onChange={handleChange} onClick={handleChange} placeholder='Quantity (comma seperated)' id='form-quantity' />
+                        </div>
+                        <div className='col-4'>
+                            <input type="number" name="offer" onChange={handleChange} onClick={handleChange} placeholder='Offer(%)' id='form-offer' />
+                        </div>
+                        <div className='col-4'>
+                            <label className='d-flex align-items-center check-container'>
+                                <input className='m-0 w-10' type="checkbox" name="status" checked={formData.status} onChange={handleChange} onClick={handleChange} />
+                                <div class="checkmark"></div>
+                            </label>
+                        </div>
 
+
+                    </div>
+                    <button type="submit">Add this product</button>
+                </div>
             </form>
-            <p>{id}</p>
-            <p>{name}</p>
-            <p>{category}</p>
-            <p>{price}</p>
         </div>
     );
-}
+};
 
 export default Create;

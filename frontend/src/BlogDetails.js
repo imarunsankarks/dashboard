@@ -1,4 +1,4 @@
-import { useParams, useHistory } from "react-router-dom";
+import { useParams, useHistory, Link } from "react-router-dom";
 import useFetch from "./useFetch";
 
 const BlogDetails = () => {
@@ -10,7 +10,7 @@ const BlogDetails = () => {
 
   const history = useHistory()
 
-  console.log(blogs);
+  // console.log(blogs);
 
   const handleClick = () => {
     fetch('/api/routes/' + id, {
@@ -19,6 +19,7 @@ const BlogDetails = () => {
       history.push('/')
     })
   }
+
 
   return (
     <div className="container product-details">
@@ -37,12 +38,30 @@ const BlogDetails = () => {
           </div>
           <div className="col-6">
             <h2>{blogs.name}</h2>
-            <h6>Price: {blogs.price}</h6>
+            <h6>₹ {blogs.price}</h6>
             <p>Category: {blogs.category}</p>
             <p>Color: {blogs.color}</p>
             <p>Material: {blogs.material}</p>
-            <p>Size: {blogs.size}</p>
+            <ul>
+              {blogs.size.map((element) => (
+                <li key={element}>{element}</li>
+              ))}
+            </ul>
+            <ul>
+              {blogs.quantity.map((element) => (
+                <li key={element}>{element}</li>
+              ))}
+            </ul>
+            <p>Status: {blogs.status.toString()}</p>
             <button onClick={handleClick}>Delete</button>
+            <Link
+              to={{
+                pathname: "/update/" + blogs._id
+              }}
+            >
+              Update Product
+            </Link>
+
           </div>
         </div>
 
